@@ -1,0 +1,60 @@
+<form #requestForm="ngForm"
+      (ngSubmit)="createRequest(requestForm.value)"
+      class="form">
+
+  <!-- Title -->
+  <div class="form-group">
+    <label>Title</label>
+    <input
+      type="text"
+      name="title"
+      ngModel
+      required
+      class="form-control">
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label>Description</label>
+    <textarea
+      name="description"
+      ngModel
+      class="form-control">
+    </textarea>
+  </div>
+
+  <!-- Priority -->
+  <label>Priority</label>
+<select name="priority" ngModel class="form-control" required>
+  <option *ngFor="let p of getEnumValues(Priority)" [ngValue]="p">
+    {{ Priority[p] }}
+  </option>
+</select>
+
+
+  <!-- Request Type -->
+  <label>Request Type</label>
+ <select name="requestType" ngModel class="form-control" required>
+  <option *ngFor="let r of getEnumValues(RequestType)" [ngValue]="r">
+    {{ RequestType[r] }}
+  </option>
+</select>
+
+
+  <!-- Created By -->
+  <div class="form-group">
+    <label>Created By</label>
+    <input
+      type="text"
+      name="createdBy"
+      ngModel
+      required
+      class="form-control">
+  </div>
+
+  <button type="submit"
+          class="btn btn-primary"
+          [disabled]="requestForm.invalid">
+    Create Request
+  </button>
+</form>

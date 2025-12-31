@@ -1,0 +1,108 @@
+<div class="container mt-4" *ngIf="requestData">
+  <h2>Edit Service Request</h2>
+
+  <form #editForm="ngForm" (ngSubmit)="updateRequest(requestData)" class="form">
+
+    <!-- Title -->
+    <div class="form-group mb-3">
+      <label>Title</label>
+      <input
+        type="text"
+        name="title"
+        [(ngModel)]="requestData.title"
+        required
+        class="form-control"
+        placeholder="Enter request title">
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea
+        name="description"
+        [(ngModel)]="requestData.description"
+        class="form-control"
+        rows="3"
+        placeholder="Enter description">
+      </textarea>
+    </div>
+
+    <!-- Priority -->
+    <div class="form-group mb-3">
+      <label>Priority</label>
+      <select name="priority" [(ngModel)]="requestData.priority" class="form-control" required>
+        <option *ngFor="let p of getEnumValues(Priority)" [value]="p">
+          {{ Priority[p] }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Request Type -->
+    <div class="form-group mb-3">
+      <label>Request Type</label>
+      <select name="requestType" [(ngModel)]="requestData.requestType" class="form-control" required>
+        <option *ngFor="let r of getEnumValues(RequestType)" [value]="r">
+          {{ RequestType[r] }}
+        </option>
+      </select>
+    </div>
+
+
+    <!-- Created By -->
+    <div class="form-group mb-3">
+      <label>Created By</label>
+      <input
+        type="text"
+        name="createdBy"
+        [(ngModel)]="requestData.createdBy"
+        required
+        class="form-control"
+        placeholder="Your name">
+    </div>
+
+
+<div *ngIf="updateSuccess" class="alert alert-success">
+  ✅ Request updated successfully
+</div>
+<button
+  type="submit"
+  class="btn btn-primary"
+  [disabled]="editForm.invalid">
+  Update Request
+</button>
+
+    <br><br>
+
+<button
+  type="button"
+  class="btn btn-success ms-2"
+  (click)="approveRequest(requestData.id)"
+  [disabled]="requestData.status !== Status.Submitted">
+  Approve
+</button>
+
+<button
+  type="button"
+  class="btn btn-danger ms-2"
+  (click)="rejectRequest(requestData.id)"
+  [disabled]="requestData.status !== Status.Submitted">
+  Reject
+</button>
+
+<button
+  type="button"
+  class="btn btn-warning ms-2"
+  (click)="submittRequest(requestData.id)"
+  [disabled]="requestData.status !== Status.Draft">
+  Submit
+</button>
+
+    <br><br>
+    <!-- Submit -->
+   
+  </form>
+</div>
+
+
+<br><br>
+

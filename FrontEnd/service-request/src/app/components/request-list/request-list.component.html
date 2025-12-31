@@ -1,0 +1,91 @@
+
+
+
+ <div class="container mt-4">
+
+  <div class="d-flex justify-content-end mb-3">
+    <button
+      type="button"
+      class="btn btn-primary"
+      [routerLink]="['/create-request']">
+      Create Request
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Request No</th>
+          <th>Title</th>
+          <th>Request Type</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Created By</th>
+          <th>Created Date</th>
+          <th>Attachment</th>
+          <th>Actions</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let sr of requests; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ sr.requestNumber }}</td>
+          <td>{{ sr.title }}</td>
+          <td>{{ RequestType[sr.requestType] }}</td>
+
+          <td>
+            <span class="badge bg-warning text-dark">
+              {{ Priority[sr.priority] }}
+            </span>
+          </td>
+
+          <td>
+            <span class="badge bg-info">
+              {{ Status[sr.status] }}
+            </span>
+          </td>
+
+          <td>{{ sr.createdBy }}</td>
+          <td>{{ sr.createdDate | date:'short' }}</td>
+
+    <td>
+      <input class="btn btn-sm btn-outline-primary" type="file" (change)="onFileSelected($event)" />
+      <button  class="btn btn-sm btn-outline-primary"
+
+      (click)="upload(sr.id)">Upload</button>
+
+      <button class="btn btn-sm btn-outline-primary" (click)="loadAttachments(sr.id)">
+        Show Attachments
+      </button>
+
+      <ul *ngIf="attachmentsMap[sr.id]?.length">
+        <li *ngFor="let a of attachmentsMap[sr.id]">
+          📎 {{ a.fileName }}
+        </li>
+      </ul>
+    </td>
+          <td>
+         
+            <button
+              class="btn btn-sm btn-outline-primary"
+              [routerLink]="['/update-request', sr.id]">
+              Edit
+            </button>
+                <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="deleteRequest(sr.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
