@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceRequestDto } from 'src/app/models/DTOs/service-request-dto';
 import { Priority } from 'src/app/models/Enums/priority.enum';
 import { RequestType } from 'src/app/models/Enums/request-type.enum';
 import { Status } from 'src/app/models/Enums/status.enum';
@@ -29,17 +30,16 @@ throw new Error('Method not implemented.');
   ngOnInit(): void {
 
     this.RequestID = Number(this.route.snapshot.params['id']);
-    this.getrequestById(this.RequestID);
+    this.getRequestById(this.RequestID);
   }
 
 
-updateRequest(requestData: any) {
+updateRequest(serviceReqDto: any) {
 
-  this.serviceReq.editServiceRequest(requestData).subscribe({
+  this.serviceReq.editServiceRequest(serviceReqDto).subscribe({
     next: () => {
       this.updateSuccess = true;
 
-      // يخفي الرسالة بعد 3 ثواني (اختياري)
       setTimeout(() => {
         this.updateSuccess = false;
       }, 3000);
@@ -52,7 +52,7 @@ updateRequest(requestData: any) {
 
 
 
-  getrequestById(id: number) {
+  getRequestById(id: number) {
     this.serviceReq.getServiceRequestById(id).subscribe(response => {
        this.requestData = response;
       console.log('Service request fetched successfully', response);

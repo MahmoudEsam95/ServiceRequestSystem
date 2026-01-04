@@ -31,7 +31,7 @@
     <div class="form-group mb-3">
       <label>Priority</label>
       <select name="priority" [(ngModel)]="requestData.priority" class="form-control" required>
-        <option *ngFor="let p of getEnumValues(Priority)" [value]="p">
+        <option *ngFor="let p of getEnumValues(Priority)" [ngValue]="p">
           {{ Priority[p] }}
         </option>
       </select>
@@ -41,7 +41,7 @@
     <div class="form-group mb-3">
       <label>Request Type</label>
       <select name="requestType" [(ngModel)]="requestData.requestType" class="form-control" required>
-        <option *ngFor="let r of getEnumValues(RequestType)" [value]="r">
+        <option *ngFor="let r of getEnumValues(RequestType)" [ngValue]="r">
           {{ RequestType[r] }}
         </option>
       </select>
@@ -96,13 +96,8 @@
   [disabled]="requestData.status !== Status.Draft">
   Submit
 </button>
-
-    <br><br>
-    <!-- Submit -->
-   
   </form>
 </div>
 
 
-<br><br>
 

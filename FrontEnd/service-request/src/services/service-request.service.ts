@@ -19,24 +19,30 @@ export class ServiceRequestService {
     return this.http.get<ServiceRequest[]>(this.apiUrl);
 
   }
-uploadAttachment(file: File, requestId: number): Observable<void> {
+  uploadAttachment(file: File, requestId: number): Observable<void> {
     const formData: FormData = new FormData();
     formData.append('file', file);
     return this.http.post<void>(this.apiUrl + `attachments/${requestId}`, formData);
   }
-getAttachments(requestId: number) {
-  return this.http.get<Attachment[]>(
-    `${this.apiUrl}attachment/${requestId}` );
-}
-
-
+  getAttachments(requestId: number) {
+    return this.http.get<Attachment[]>(
+      `${this.apiUrl}attachment/${requestId}`);
+  }
+  previewAttachment(attachmentId: number) {
+    return this.http.get(
+      `${this.apiUrl}attachments/preview/${attachmentId}`,
+      { responseType: 'blob' }
+    );
+  }
+  deleteAttachment(attachmentId: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + `attachment/${attachmentId}`);
+  }
   createServiceRequest(dto: ServiceRequestDto) {
     return this.http.post<ServiceRequest>(this.apiUrl, dto);
   }
 
-
-  editServiceRequest(serviceRequest: ServiceRequest): Observable<ServiceRequest> {
-    return this.http.put<ServiceRequest>(this.apiUrl + `edit/${serviceRequest.id}`, serviceRequest);
+  editServiceRequest(ServiceRequestDto: any): Observable<ServiceRequest> {
+    return this.http.put<ServiceRequest>(this.apiUrl + `edit/${ServiceRequestDto.id}`, ServiceRequestDto);
   }
 
   submitServiceRequest(id: number): Observable<void> {

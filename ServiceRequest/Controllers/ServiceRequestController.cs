@@ -219,5 +219,22 @@ namespace ServiceRequest.Controllers
             return NoContent();
         }
 
-    } 
+
+        [HttpGet("attachments/preview/{id}")]
+        public async Task<IActionResult> PreviewAttachment(int id)
+        {
+            var attachment = await _context.Attachments.FindAsync(id);
+            if (attachment == null)
+                return NotFound();
+
+            if (!System.IO.File.Exists(attachment.FilePath))
+                return NotFound("File not found on server");
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(attachment.FilePath);
+
+            return File(fileBytes, attachment.ContentType, attachment.FileName);
+        }
+
+
+    }
 }
